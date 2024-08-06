@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 # Global variables to store HSV and BGR values
 h, s, v = 0, 0, 0
@@ -29,10 +30,16 @@ while True:
     cv2.putText(frame, f"H: {h}, S: {s}, V: {v}", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
     cv2.putText(frame, f"B: {b}, G: {g}, R: {r}", (20, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
     
+    # Display the selected color in the top right corner
+    selected_color = np.zeros((100, 100, 3), np.uint8)
+    selected_color[:] = [b, g, r]
+    frame[10:110, frame.shape[1]-110:frame.shape[1]-10] = selected_color
+    
     cv2.imshow("Frame", frame)
     key = cv2.waitKey(1)
-    if key == 27:  # ESC tuşuna basıldığında çık
+    if key == 27:  # ESC key to exit
         break
 
 cap.release()
 cv2.destroyAllWindows()
+
